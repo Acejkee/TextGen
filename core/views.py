@@ -8,7 +8,7 @@ from .tasks import generate_text
 
 
 class PromptViewSet(viewsets.ModelViewSet):
-    queryset = Prompt.objects.all()
+    queryset = Prompt.objects.all().select_related('content')
     serializer_class = PromptSerializer
 
     def create(self, request, *args, **kwargs):

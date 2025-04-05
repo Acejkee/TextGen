@@ -36,7 +36,7 @@ def generate_text(prompt_id):
             'Your generated text',
             output_text,
             settings.DEFAULT_FROM_EMAIL,
-            ['belousow.ilja@yandex.ru'],
+            ['example@example.ru'],
             fail_silently=False,
         )
 
