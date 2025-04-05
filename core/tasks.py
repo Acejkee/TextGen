@@ -2,7 +2,6 @@ from openai import OpenAI
 from celery import shared_task
 from django.conf import settings
 from django.core.mail import send_mail
-#from mailersend import emails
 
 from .models import Prompt, PromptContent
 
@@ -10,6 +9,7 @@ client = OpenAI(
   base_url="https://openrouter.ai/api/v1",
   api_key=settings.OPENAI_API_KEY,
 )
+
 
 @shared_task
 def generate_text(prompt_id):
@@ -35,8 +35,8 @@ def generate_text(prompt_id):
         send_mail(
             'Your generated text',
             output_text,
-            'test@yandex.ru',
-            ['recipient@example.com'],
+            settings.DEFAULT_FROM_EMAIL,
+            ['belousow.ilja@yandex.ru'],
             fail_silently=False,
         )
 
@@ -44,4 +44,3 @@ def generate_text(prompt_id):
         prompt.status = Prompt.FAILED
         prompt.save()
         print(f"Error generating text: {e}")
-
